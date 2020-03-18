@@ -1,50 +1,46 @@
 <div class="container">
-	<div class="py-5 text-center">
-		<h1> Депозитний калькулятор </h1>
-	</div>
+<div class="py-5 text-center">
+	<h1> Депозитний калькулятор </h1>
+</div>
 
-	<div class="row justify-content-md-center">
-	  <div class="col col-md-6">
-		<form id = "form" method="POST" action="/">
-			<h4 class="mb-3">Основні дані</h4>
-			<div class="row">
-				<div class="col-md-6 mb-3"><label for="currency">Валюта</label></div>
-				<div class="col-md-6 mb-3"><select class="custom-select d-block w-100" name="currency" id="currency"><option selected="selected" value="UAH">UAH</option><option value="USD">USD</option><option value="EUR">EUR</option></select></div>
+<div class="row justify-content-md-center">
+  <div class="col col-md-6">
+	<form id = "form" class="needs-validation" method="POST" action="/">
+		<h4 class="mb-3">Основні дані</h4>
+		<div class="row">
+			<div class="col-md-6 mb-3"><label for="currency">Валюта</label></div>
+			<div class="col-md-6 mb-3"><select class="custom-select d-block w-100" name="currency" id="currency"><option selected="selected" value="UAH">UAH</option><option value="USD">USD</option><option value="EUR">EUR</option></select></div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 mb-3"><label for="sum">Сума внеску</label></div>
+			<div class="col-md-6 mb-3"><input class="form-control" type="number" name="sum" id="sum" placeholder="0.00" required></div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 mb-3"><label for="interest_rate">Річна % ставка</label></div>
+			<div class="col-md-6 mb-3"><input class="form-control" type="number" step="0.01" name="interest_rate" id="interest_rate" placeholder="0.00" required>
 			</div>
-			<div class="row">
-				<div class="col-md-6 mb-3"><label for="sum">Сума внеску</label></div>
-				<div class="col-md-6 mb-3"><input class="form-control" type="number" name="sum" id="sum" placeholder="0.00" required></div>
-			</div>
-			<div class="row">
-				<div class="col-md-6 mb-3"><label for="interest_rate">Річна % ставка</label></div>
-				<div class="col-md-6 mb-3"><input class="form-control" type="number" step="0.01" name="interest_rate" id="interest_rate" placeholder="0.00" required>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6 mb-3"><label for="start_date">Дата внеску</label></div>
-				<div class="col-md-6 mb-3"><input class="form-control" type="date" name="start_date" id="start_date" required></div>
-			</div>
-			<div class="row">
-				<div class="col-md-3 mb-3"><label for="term">Строк внеску</label></div>
-				<div class="col-md-3 mb-3"><select class="custom-select d-block w-100" name="term_length" id="term_length"><option selected="selected" value="months">місяців</option><option value="years">років</option></select></div>
-				<div class="col-md-6 mb-3"><input class="form-control" type="number" name="term" id="term" placeholder="0" required></div>
-			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 mb-3"><label for="start_date">Дата внеску</label></div>
+			<div class="col-md-6 mb-3"><input class="form-control" type="date" name="start_date" id="start_date" required></div>
+		</div>
+		<div class="row">
+			<div class="col-md-3 mb-3"><label for="term">Строк внеску</label></div>
+			<div class="col-md-3 mb-3"><select class="custom-select d-block w-100" name="term_length" id="term_length"><option selected="selected" value="months">місяців</option><option value="years">років</option></select></div>
+			<div class="col-md-6 mb-3"><input class="form-control" type="number" name="term" id="term" placeholder="0" required></div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 mb-3"><label for="capitalization">Капіталізація</label></div>
+			<div class="col-md-6 mb-3"><select class="custom-select d-block w-100" name="capitalization" id="capitalization"><option selected="selected" value="none">немає</option><option value="monthly">щомісячно</option><option value="quarterly">щоквартально</option><option value="yearly">щорічно</option></select></div>
+		</div>
+		<hr>
+		<div class="col-md-7 mb-4">
+			<button class="btn btn-primary btn-lg btn-block" type="submit">Розрахувати</button>
+		</div>
+	</form>
+  </div>
+<div id = "tab_container" class="col col-md-8" style="display: none;">
 
-			<h4 class="input_heading">Інфляція</h4>
-
-			<div class="row">
-				<div class="col-md-6 mb-3"><label for="infl_level">Передбачуваний рівнь інфляції на період розміщення внеску</label></div>
-				<div class="col-md-6 mb-3"><input class="form-control" type="number" name="infl_level" id="infl_level" placeholder="0.00" step="0.01"></div>
-			</div>
-			<hr class="mb-4">
-			<div class="col-md-7 mb-4">
-				<button class="btn btn-primary btn-lg btn-block" type="submit">Розрахувати</button>
-			</div>
-		</form>
-	  </div>
-
-	<div id = "tab_container" class="col col-md-8" style="display: none;">
-
-	</div>
-	</div>
+</div>
+</div>
 </div>
