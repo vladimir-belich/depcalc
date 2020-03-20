@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require_relative 'services/dep_calculator'
 require 'byebug'
 
 class App < Sinatra::Base

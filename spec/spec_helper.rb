@@ -8,6 +8,7 @@ require File.expand_path '../../app.rb', __FILE__
 module RSpecMixin
   include Rack::Test::Methods
   def app() App end
+  def dpst() DepCalculator end
 end
 
 RSpec.configure do |config|
