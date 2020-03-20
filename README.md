@@ -1,6 +1,6 @@
 # README
 
-##Deposit calculator with interest capitalization
+## Deposit calculator with interest capitalization
 
 ### Usage
 
