@@ -5,4 +5,23 @@
   <div class="col-md-3" style="border: 1px solid #d4d4d4; background-color: #ececec">Сума тіла</div>
   <div class="col-md-4" style="border: 1px solid #d4d4d4; background-color: #ececec">% по вкладу</div>
 </div>
+
+<% DepCalculator.call(start_date: date, months: months, interest_rate: interest_rate, start_sum: sum, capitalization_method: capitalization_method).each do |row| %>
+  <% if row[:date].nil?%>
+    <hr>
+    <div class="row">
+    <div class="col-md-3" style="font-weight:bold;">Усього</div>
+    <div class="col-md-2" style="font-weight:bold;"><%= row[:days] %></div>
+    <div class="col-md-3" style="font-weight:bold;"><%= row[:sum] %></div>
+    <div class="col-md-4" style="font-weight:bold;"><%= row[:interest_amount] %></div>
+    </div>
+  <% else %>
+      <div class="row">
+        <div class="col-md-3"><%= row[:date] %></div>
+      <div class="col-md-2"><%= row[:days] %></div>
+      <div class="col-md-3"><%= row[:sum] %></div>
+      <div class="col-md-4"><%= row[:interest_amount] %></div>
+    </div>
+  <% end %>
+<% end %>
 <br>
