@@ -1,54 +1,61 @@
 # frozen_string_literal: true
 
 class DepCalculator
-  attr_reader :start_date, :date, :months, :interest_rate, :start_sum, :capitalization_method
+  attr_reader :date, :months, :interest_rate, :sum, :sum_capital, :capitalization_method, :count
 
   def self.call(args)
     new(args).call
   end
 
-  def initialize(args)
-    @start_date = args[:start_date]
-    @date = args[:start_date]
-    @months = args[:months]
-    @interest_rate = args[:interest_rate]
-    @start_sum = args[:start_sum]
-    @capitalization_method = args[:capitalization_method]
+  def initialize(start_date:, months:, interest_rate:, start_sum:, capitalization_method:)
+    @date = start_date
+    @months = months
+    @interest_rate = interest_rate
+    @sum = start_sum
+    @sum_capital = 0
+    @capitalization_method = capitalization_method
+    @count = 1
   end
 
   def call
-    interest_calculation(start_sum)
-  end
-
-  def interest_calculation(sum)
-    result_arr = Array[{ date: date, days: 0, sum: sum, interest_amount: 0 }]
-    count = 1
-    interest_amount = 0
-    sum_capital = 0
-    perform_calculation(count, interest_amount, sum, sum_capital, result_arr)
-    add_total(result_arr)
+    interest_calculation
   end
 
   private
 
-  def perform_calculation(count, interest_amount, sum, sum_capital, result_arr)
+  def interest_calculation
+    result_arr = Array[{ date: date, days: 0, sum: sum, interest_amount: 0 }]
+
+    perform_calculation(result_arr)
+
+    add_total(result_arr)
+  end
+
+  def perform_calculation(result_arr)
+    interest_amount = 0
+
     months.times do
       days = month_days
-      interest_amount = calc(sum, days)
+      interest_amount = calc(days)
 
-      sum_capital += interest_amount if !capitalization?(count, capitalization_method) || (capitalization_method == 1)
+      capitalization(interest_amount) unless capitalization_method.zero?
 
-      if capitalization?(count, capitalization_method)
-        sum += sum_capital
-        sum_capital = capitalization_method > 1 ? interest_amount : 0
-        count = 0
-      end
-
-      @date = date.next_month
+      netx_month
       result_arr << { date: date, days: days, sum: sum.round(2), interest_amount: interest_amount.round(2) }
-
-      count += 1
     end
+  end
+
+  def calc(days)
+    days_in_year = Date.leap?(date.year) ? 366 : 365
+    ((sum * interest_rate / 100 * days) / days_in_year)
+  end
+
+  def capitalization(interest_amount)
+    @sum_capital += interest_amount if !capitalization?(capitalization_method) || (capitalization_method == 1)
+    return unless capitalization?(capitalization_method)
+
+    @sum += @sum_capital
+    @sum_capital = capitalization_method > 1 ? interest_amount : 0
   end
 
   def month_days
@@ -57,27 +64,29 @@ class DepCalculator
     mdays[date.month]
   end
 
-  def calc(sum, days)
-    days_in_year = Date.leap?(date.year) ? 365 : 366
-    ((sum * interest_rate / 100 * days) / days_in_year)
+  def netx_month
+    @date = date.next_month
+    @count += 1
   end
 
-  def capitalization?(count, capitalization_method)
-    return true if monthly_capitalization(count, capitalization_method)
-    return true if quarterly_capitalization(count, capitalization_method)
-    return true if annual_capitalization(count, capitalization_method)
+  def capitalization?(capitalization_method)
+    return true if monthly_capitalization(capitalization_method)
+    return true if quarterly_capitalization(capitalization_method)
+    return true if annual_capitalization(capitalization_method)
+
+    false
   end
 
-  def monthly_capitalization(count, capitalization_method)
-    capitalization_method == 1 && count == 1
+  def monthly_capitalization(capitalization_method)
+    capitalization_method == 1
   end
 
-  def quarterly_capitalization(count, capitalization_method)
-    capitalization_method == 2 && count == 3
+  def quarterly_capitalization(capitalization_method)
+    capitalization_method == 2 && (count % 3).zero?
   end
 
-  def annual_capitalization(count, capitalization_method)
-    capitalization_method == 3 && count == 12
+  def annual_capitalization(capitalization_method)
+    capitalization_method == 3 && (count % 12).zero?
   end
 
   def add_total(result_arr)
