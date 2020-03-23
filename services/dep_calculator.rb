@@ -24,7 +24,7 @@ class DepCalculator
   private
 
   def interest_calculation
-    result_arr = Array[{ date: date, days: 0, sum: sum, interest_amount: 0 }]
+    result_arr = Array[{ count: nil, date: date, days: 0, sum: sum, interest_amount: 0 }]
 
     perform_calculation(result_arr)
 
@@ -41,7 +41,8 @@ class DepCalculator
       capitalization(interest_amount) unless capitalization_method.zero?
 
       netx_month
-      result_arr << { date: date, days: days, sum: sum.round(2), interest_amount: interest_amount.round(2) }
+      result_arr << { count: count - 1, date: date, days: days, sum: sum.round(2),
+                      interest_amount: interest_amount.round(2) }
     end
   end
 
@@ -90,7 +91,8 @@ class DepCalculator
   end
 
   def add_total(result_arr)
-    result_arr << { date: nil,
+    result_arr << { count: nil,
+                    date: nil,
                     days: result_arr.map.sum { |e| e[:days] },
                     sum: result_arr.last[:sum],
                     interest_amount: result_arr.map.sum { |e| e[:interest_amount] }.round(2) }

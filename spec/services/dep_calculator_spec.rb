@@ -13,11 +13,11 @@ describe DepCalculator do
       let(:capitalization_method) { 0 }
 
       it 'returns the calculation of the deposit for 3 month' do
-        is_expected.to eq([{date: start_date, days: 0, sum: start_sum, interest_amount: 0},
-                           {date: Date.parse('2019-04-15'), days: 31, sum: 30000.00, interest_amount: 331.23},
-                           {date: Date.parse('2019-05-15'), days: 30, sum: 30000.00, interest_amount: 320.55},
-                           {date: Date.parse('2019-06-15'), days: 31, sum: 30000.00, interest_amount: 331.23},
-                           {date: nil, days: 92, sum: 30000.00, interest_amount: 983.01}])
+        is_expected.to eq([{count: nil, date: start_date, days: 0, sum: start_sum, interest_amount: 0},
+                           {count: 1, date: Date.parse('2019-04-15'), days: 31, sum: 30000.00, interest_amount: 331.23},
+                           {count: 2, date: Date.parse('2019-05-15'), days: 30, sum: 30000.00, interest_amount: 320.55},
+                           {count: 3, date: Date.parse('2019-06-15'), days: 31, sum: 30000.00, interest_amount: 331.23},
+                           {count: nil, date: nil, days: 92, sum: 30000.00, interest_amount: 983.01}])
       end
     end
 
@@ -29,11 +29,11 @@ describe DepCalculator do
       let(:capitalization_method) { 1 }
 
       it 'returns the calculation of the deposit for 3 months with a monthly capitalization' do
-        is_expected.to eq([{date: start_date, days: 0, sum: start_sum, interest_amount: 0},
-                           {date: Date.parse('2019-04-15'), days: 31, sum: 30331.23, interest_amount: 331.23},
-                           {date: Date.parse('2019-05-15'), days: 30, sum: 30655.32, interest_amount: 324.09},
-                           {date: Date.parse('2019-06-15'), days: 31, sum: 30993.79, interest_amount: 338.47},
-                           {date: nil, days: 92, sum: 30993.79, interest_amount: 993.79}])
+        is_expected.to eq([{count: nil, date: start_date, days: 0, sum: start_sum, interest_amount: 0},
+                           {count: 1, date: Date.parse('2019-04-15'), days: 31, sum: 30331.23, interest_amount: 331.23},
+                           {count: 2, date: Date.parse('2019-05-15'), days: 30, sum: 30655.32, interest_amount: 324.09},
+                           {count: 3, date: Date.parse('2019-06-15'), days: 31, sum: 30993.79, interest_amount: 338.47},
+                           {count: nil, date: nil, days: 92, sum: 30993.79, interest_amount: 993.79}])
       end
     end
 
@@ -45,14 +45,14 @@ describe DepCalculator do
       let(:capitalization_method) { 2 }
 
       it 'returns the calculation of the deposit for 6 months with a quarterly capitalization' do
-        is_expected.to eq([{date: start_date, days: 0, sum: start_sum, interest_amount: 0},
-                           {date: Date.parse('2019-04-15'), days: 31, sum: 30000.00, interest_amount: 331.23},
-                           {date: Date.parse('2019-05-15'), days: 30, sum: 30000.00, interest_amount: 320.55},
-                           {date: Date.parse('2019-06-15'), days: 31, sum: 30651.78, interest_amount: 331.23},
-                           {date: Date.parse('2019-07-15'), days: 30, sum: 30651.78, interest_amount: 327.51},
-                           {date: Date.parse('2019-08-15'), days: 31, sum: 30651.78, interest_amount: 338.43},
-                           {date: Date.parse('2019-09-15'), days: 31, sum: 31648.96, interest_amount: 338.43},
-                           {date: nil, days: 184, sum: 31648.96, interest_amount: 1987.38}])
+        is_expected.to eq([{count: nil, date: start_date, days: 0, sum: start_sum, interest_amount: 0},
+                           {count: 1, date: Date.parse('2019-04-15'), days: 31, sum: 30000.00, interest_amount: 331.23},
+                           {count: 2, date: Date.parse('2019-05-15'), days: 30, sum: 30000.00, interest_amount: 320.55},
+                           {count: 3, date: Date.parse('2019-06-15'), days: 31, sum: 30651.78, interest_amount: 331.23},
+                           {count: 4, date: Date.parse('2019-07-15'), days: 30, sum: 30651.78, interest_amount: 327.51},
+                           {count: 5, date: Date.parse('2019-08-15'), days: 31, sum: 30651.78, interest_amount: 338.43},
+                           {count: 6, date: Date.parse('2019-09-15'), days: 31, sum: 31648.96, interest_amount: 338.43},
+                           {count: nil, date: nil, days: 184, sum: 31648.96, interest_amount: 1987.38}])
       end
     end
 
@@ -64,7 +64,7 @@ describe DepCalculator do
       let(:capitalization_method) { 3 }
 
       it 'returns the calculation of the deposit for 12 months with a annual capitalization' do
-        is_expected.to include({date: nil, days: 365, sum: 33568.77, interest_amount: 3899.99})
+        is_expected.to include({count: nil, date: nil, days: 365, sum: 33568.77, interest_amount: 3899.99})
       end
     end
   end
