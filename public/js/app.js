@@ -1,22 +1,25 @@
-$(document).ready(function(){
-    $('form').on('submit', function(event){
-	    event.preventDefault();
-	    $('#tab_container').html('');
-		$('#tab_container').css('display','block');
+function post_params(form){
+  var xhr = new XMLHttpRequest()
+  xhr.open('POST', '/tabl', true)
 
-		let coeff = $('#term_length').val() == 'months' ? 1 : 12;
-		url = '/tabl';
-	    $.ajax(url, {
-	    		method: 'post',
-	    		cache: false,
-	    	    data: {months: $('#term').val() * coeff,
-	    	           start_date: $('#start_date').val(),
-	    	           sum: $('#sum').val(), 
-	    	           interest_rate: $('#interest_rate').val(),
-	    	           capitalization_method: $('#capitalization').prop('selectedIndex') },
-	            dataType: 'html',
-	          }).done(function(response) {
-	                   $('#tab_container').html(response);
-	                 });
-    });
-});
+  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+  params = [];
+  params.push('sum=' + document.getElementById('sum').value);
+  params.push('interest_rate=' + document.getElementById('interest_rate').value);
+  params.push('start_date=' + document.getElementById('start_date').value);
+  let coeff = document.getElementById('term_length').value == 'months' ? 1 : 12;
+  params.push('months=' + document.getElementById('term').value * coeff);
+  params.push('capitalization_method=' + document.getElementById('capitalization').selectedIndex);
+
+  xhr.send(params.join('&'));
+
+  xhr.onreadystatechange = function() {
+
+    if(xhr.readyState == 4 && xhr.status == 200) {
+      element = document.getElementById('tab_container');
+      element.style.display = 'block';
+      element.innerHTML = xhr.responseText;
+    }
+  }
+}
