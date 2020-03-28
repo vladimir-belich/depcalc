@@ -14,3 +14,6 @@ git clone https://github.com/vladimir-belich/depcalc.git [<destination_dir>]
 
 4. run: rackup 
    and point your browser at http://localhost:9292/. Enjoy!
+
+
+* deployed on Heroku: https://depcalc.herokuapp.com/
