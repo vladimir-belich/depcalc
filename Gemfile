@@ -13,4 +13,7 @@ end
 group :test do
   gem 'rack-test'
   gem 'rspec'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
 end
