@@ -6,6 +6,8 @@ ENV['RACK_ENV'] = 'test'
 
 require File.expand_path '../../app.rb', __FILE__
 
+Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each {|f| require f }
+
 module RSpecMixin
   include Rack::Test::Methods
   def app() App end
