@@ -1,5 +1,6 @@
 require 'rack/test'
 require 'rspec'
+require 'capybara/rspec'
 
 ENV['RACK_ENV'] = 'test'
 
@@ -23,4 +24,9 @@ RSpec.configure do |config|
   config.shared_context_metadata_behavior = :apply_to_host_groups
   
   config.include RSpecMixin
+  config.include Capybara::DSL
+  config.include Capybara::RSpecMatchers
 end
+
+Capybara.server = :webrick
+Capybara.app = App
