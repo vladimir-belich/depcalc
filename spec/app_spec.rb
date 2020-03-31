@@ -16,14 +16,24 @@ describe App do
   end
 
   describe 'Download CSV' do
-    it 'should return a CSV file with the calculation' do
-      get '/file', { start_date: '16-03-2020', months: 3, interest_rate: 13, start_sum: 30000.00, capitalization_method: 0 }
-      
-      filename = last_request.env['rack.session']['session_id'].to_s[0..8] + '.csv'
+    before( :each ) do
+      clear_downloads
+    end
 
-      expect(last_response).to be_ok
-      expect(last_response.content_type).to eq 'Application/octet-stream'
-      expect(last_response.headers['Content-Disposition']).to include(filename)
+    it 'should download the CSV file', js: true do
+      visit '/'
+      fill_in "sum", with: 30000.00
+      fill_in "interest_rate", with: 13
+      fill_in "start_date", with: '16-03-2020'
+      fill_in "term", with: 3
+      
+      click_on 'Розрахувати'
+      expect(page).to have_content 'Усього'
+
+      page.find('#csv').click
+      wait_for_download
+
+      expect( File.read(download_path + '/output.csv') ).to include '#;date;days;sum;interest'
     end
   end 
 end

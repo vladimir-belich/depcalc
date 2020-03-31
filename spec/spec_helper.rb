@@ -28,6 +28,7 @@ RSpec.configure do |config|
   config.include RSpecMixin
   config.include Capybara::DSL
   config.include Capybara::RSpecMatchers
+  config.include DownloadHelpers
 end
 
 Capybara.server = :webrick
