@@ -1,3 +1,16 @@
+document.addEventListener("DOMContentLoaded", () => {
+  var today = new Date();
+  var today = today.getFullYear() + '-'
+              +String(today.getMonth()).padStart(2, '0') + '-'
+              +String(today.getDate()).padStart(2, '0');
+
+  document.getElementById('sum').value = 30000;
+  document.getElementById('interest_rate').value = 13;
+  document.getElementById('start_date').value = today;
+  document.getElementById('term').value = 3;
+  document.getElementById('capitalization').selectedIndex = 1;
+});
+
 function get_calc(form){
   params = [];
   params.push('sum=' + document.getElementById('sum').value);
